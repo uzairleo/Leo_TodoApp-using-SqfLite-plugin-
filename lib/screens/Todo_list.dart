@@ -8,7 +8,7 @@ class Todolist extends StatefulWidget {
 }
 
 class _TodolistState extends State<Todolist> {
-  int count=1;
+  int count=1;//count for list size 
   @override
   Widget build(BuildContext context) {
     
@@ -36,8 +36,6 @@ class _TodolistState extends State<Todolist> {
               ),
               body:todoBody(),
               );
-
-
   }
   ListView todoBody()
   {
