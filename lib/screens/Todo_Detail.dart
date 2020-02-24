@@ -76,9 +76,7 @@ decoration: InputDecoration(
              border: OutlineInputBorder(
                borderRadius: BorderRadius.circular(6.0),
              ),
-             labelText: "Discription"
-             
-             
+             labelText: "Discription" 
            ),
           
          ),
