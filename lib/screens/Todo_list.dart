@@ -29,9 +29,7 @@ class _TodolistState extends State<Todolist> {
                 child: Icon(Icons.add),
                 onPressed: ()
                 {
-                  Navigator.push(context,MaterialPageRoute(
-                    builder: (BuildContext context)=> (TodoDetail())
-                  ));
+                  navigateToNextScreen();
                 },
               ),
               body:todoBody(),

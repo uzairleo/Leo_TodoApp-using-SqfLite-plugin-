@@ -53,8 +53,8 @@ class _TodoDetailState extends State<TodoDetail> {
              style: textStyle,
              controller: null,
              onChanged: null,
-decoration: InputDecoration(
-  labelStyle: textStyle,
+              decoration: InputDecoration(
+            labelStyle: textStyle,
   border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(5.0),
   ),
@@ -84,10 +84,12 @@ decoration: InputDecoration(
        
         //fourth element row of Buttons
       Padding(
+        
         padding: const EdgeInsets.only(top:8.0),
         child: Row(
           children: <Widget>[
-            Expanded(child: RaisedButton(
+         Expanded(child: RaisedButton(
+        
               onPressed: (){},
               child:Text("Save",textScaleFactor: 1.5,),
               color: Theme.of(context).primaryColorDark,
