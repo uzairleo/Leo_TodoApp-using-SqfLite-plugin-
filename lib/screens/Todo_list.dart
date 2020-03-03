@@ -15,12 +15,20 @@ class _TodolistState extends State<Todolist> {
     return Scaffold(
       appBar: AppBar(
         title:Text("Leo_Todo_App"),
-          centerTitle: true,
+        centerTitle: true,
           ),
            drawer: Drawer(
-             child: UserAccountsDrawerHeader(accountName:Text("uzairleo") 
-             , accountEmail: Text("Uzair.jan336@gmail.com"),
-              )
+             child: Column(
+                children: <Widget>[
+                  Container(
+                    height:300,
+                    color:Colors.deepPurple,
+                    child:Center(
+                      child: Icon(Icons.tag_faces,size: 200,color:Colors.white60),
+                    ),
+                  )
+                ],
+             )
              ,
              elevation: 3.0,
               ),
@@ -29,7 +37,7 @@ class _TodolistState extends State<Todolist> {
                 child: Icon(Icons.add),
                 onPressed: ()
                 {
-                  navigateToNextScreen();
+                  navigateToNextScreen(appBar: "Add Note");
                 },
               ),
               body:todoBody(),
@@ -41,34 +49,38 @@ class _TodolistState extends State<Todolist> {
       itemCount: count,
       itemBuilder: (context,index)
       {
-        return Card(
-            elevation:  4.0,
-             child: ListTile(
-               leading:CircleAvatar(
-                 child:Icon(Icons.keyboard_arrow_right),
-                 backgroundColor: Colors.yellow,
+        return  Card(
+              elevation:  4.0,
+               child: InkWell(
+                 onTap: (){
+                  navigateToNextScreen(appBar: "Edit Note");
+                    },
+                                child: ListTile(
+                   leading:CircleAvatar(
+                     child:Icon(Icons.keyboard_arrow_right),
+                     backgroundColor: Colors.yellow,
+                   ),
+                   title: Text("dummy title"),
+                   subtitle: Text("dummy subtitle"),
+                   trailing: IconButton(
+                     icon: Icon(Icons.delete), 
+                     onPressed: (){
+                    //deleteButtonLogic Here
+                     })
+                     ),
                ),
-               title: Text("dummy title"),
-               subtitle: Text("dummy subtitle"),
-               trailing: IconButton(
-                 icon: Icon(Icons.delete), 
-                 onPressed: (){
-                navigateToNextScreen();
-                 })
-                 ),
-             
         );
       }
     );
   }
 
-navigateToNextScreen()
+navigateToNextScreen({String appBar})
 {
      Navigator.push(context,
                    MaterialPageRoute(
                      builder:(BuildContext context )
                      {
-                       return TodoDetail();
+                       return TodoDetail(appBar);
                      }
                    ));
                 
