@@ -1,12 +1,12 @@
 // import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+// import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:leo_todo_app/Models/Note.dart';
 import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
-import 'package:leo_todo_app/screens/Todo_list.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+// import 'package:leo_todo_app/screens/Todo_list.dart';
+// import 'package:rflutter_alert/rflutter_alert.dart';
 
 class TodoDetail extends StatefulWidget {
   final Note note;
