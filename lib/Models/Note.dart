@@ -56,15 +56,17 @@ class Note{
 
 Map<String,dynamic> toMap()
 {
+
   var dataToMap=Map<String,dynamic> ();
   if(_id!=null){
    dataToMap['id']=_id;
-  }
-   dataToMap['title']=_title;
+    }
+     dataToMap['title']=_title;
    dataToMap['discription']=_discription;
    dataToMap['date']=_date;
    dataToMap['priorities']=_priorities;
 return dataToMap;
+
 }
 
  //And now a function that extract Note object from map Object reverse of the above one

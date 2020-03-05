@@ -42,7 +42,7 @@ async{
 }
 
 //now its time to initialize database
-Future<Database> _initializedDatabase()
+Future<Database> initializedDatabase()
 async
 {
   //now we have to get the particular directory of each os (android or ios )where our database will create
@@ -58,21 +58,22 @@ Future<Database> get database async {
 //as the object is SINGLETONS SO here we check for null if its mean _database object null then initialized then move ahead
 if(_database==null)
 {
-  _database=await _initializedDatabase();
+  _database=await initializedDatabase();
 }
   return _database;
 }
 
 //Now we have to do the CRUD operation(Create ,Retrieve,Update and Delete)
-//using these funtion 
-//Retrieving/Reading Operation: Get all Note Objects from database
+//using these funtions
+
+
+//1=>Retrieving/Reading Operation: Get all Note Objects from database
 Future<List<Map<String,dynamic>>> getNoteMapList()async
 {
   Database db= await this.database;
-
-  String sqlrawaQuery='SELECT * FROM $tabName order by $colPriorities ASC';
-  var result=db.rawQuery(sqlrawaQuery);//using raw SQL queries
-  // var result=db.query(tabName,orderBy: '$colPriorities ASC');//using helpers funciton both have same result
+  // String sqlrawaQuery='SELECT * FROM $tabName order by $colPriorities ASC';
+  // var result=await db.rawQuery(sqlrawaQuery);//using raw SQL queries
+  var result=await db.query(tabName,orderBy: '$colPriorities ASC');//using helpers funciton both have same result
   return result;
 }
 
@@ -110,5 +111,23 @@ Future<int> getCount()async
   int result =Sqflite.firstIntValue(count);
   return result;
 }
+
+Future<List<Note>> getNoteList()async
+{
+  var noteMaplist=await getNoteMapList();
+  int count=noteMaplist.length;
+
+  List<Note> noteList=List<Note>();
+  for(int i=0;i< count ;i++)
+
+  {
+      noteList.add(Note.fromMapObject(noteMaplist[i]));
+  }
+
+  return noteList;
+
+}
+
+ 
 
 }

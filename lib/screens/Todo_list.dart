@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:leo_todo_app/screens/Todo_Detail.dart';
-
+import 'dart:async';
+import 'package:leo_todo_app/Models/Note.dart';
+import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
+import 'package:sqflite/sqflite.dart';
 
 class Todolist extends StatefulWidget {
   @override
@@ -8,10 +11,18 @@ class Todolist extends StatefulWidget {
 }
 
 class _TodolistState extends State<Todolist> {
-  int count=1;//count for list size 
+  int count=0;//count for list size 
+
+  DatabaseHelper databaseHelper=DatabaseHelper();
+  List<Note> notelist;
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context)
+   {
+    if(notelist==null)
+    {
+      notelist=List<Note>();
+      updateListview();
+    }
     return Scaffold(
       appBar: AppBar(
         title:Text("Leo_Todo_App"),
@@ -37,7 +48,7 @@ class _TodolistState extends State<Todolist> {
                 child: Icon(Icons.add),
                 onPressed: ()
                 {
-                  navigateToNextScreen(appBar: "Add Note");
+                  navigateToNextScreen(Note('','',2),appBar: "Add Note");
                 },
               ),
               body:todoBody(),
@@ -53,19 +64,20 @@ class _TodolistState extends State<Todolist> {
               elevation:  4.0,
                child: InkWell(
                  onTap: (){
-                  navigateToNextScreen(appBar: "Edit Note");
+                  navigateToNextScreen(this.notelist[index],appBar: "Edit Note");
                     },
                                 child: ListTile(
                    leading:CircleAvatar(
-                     child:Icon(Icons.keyboard_arrow_right),
-                     backgroundColor: Colors.yellow,
+                     child:getPriorityIcon(this.notelist[index].getPriorities),
+                     backgroundColor: getPriorityColor(this.notelist[index].getPriorities),
                    ),
-                   title: Text("dummy title"),
-                   subtitle: Text("dummy subtitle"),
+                   title:Text( this.notelist[index].getTitle),
+                   subtitle: Text( this.notelist[index].getDate),
                    trailing: IconButton(
                      icon: Icon(Icons.delete), 
                      onPressed: (){
                     //deleteButtonLogic Here
+                    delete(context, notelist[index]);
                      })
                      ),
                ),
@@ -73,16 +85,80 @@ class _TodolistState extends State<Todolist> {
       }
     );
   }
+ Icon getPriorityIcon(int priorityicon)
+  {
+    switch(priorityicon)
+    {
+      case 1:
+      return Icon(Icons.play_arrow);    break;
+      case 2:
+      return Icon(Icons.keyboard_arrow_right);
+  
+      break;
 
-navigateToNextScreen({String appBar})
-{
-     Navigator.push(context,
+    default:
+        return Icon(Icons.keyboard_arrow_right);
+    }
+
+  }
+
+  Color getPriorityColor(int priorityColor)
+  {
+      switch(priorityColor)
+      {
+        case 1: 
+        return Colors.orange;
+        break;
+        case 2:
+        return Colors.yellow;
+        break;
+        default:
+        return Colors.yellow;
+      }
+  }
+  delete(BuildContext context,Note note)async
+  {
+      int result= await DatabaseHelper().deleteNote(note.getId);
+      if(result!=0)
+      {
+        showSnackbar(context,"Note no $result deleted successfully");
+        updateListview();
+      }
+  }
+  showSnackbar(BuildContext context,String title)
+  {
+    var snackbar=SnackBar(content: Text(title),);
+      Scaffold.of(context).showSnackBar(snackbar);
+  }
+
+navigateToNextScreen(Note note,{String appBar})
+async{
+   bool result=await  Navigator.push(context,
                    MaterialPageRoute(
                      builder:(BuildContext context )
                      {
-                       return TodoDetail(appBar);
+                       return TodoDetail(note,appBar);
                      }
                    ));
+    if(result==true)
+    {
+      updateListview();
+    }
                 
+}
+
+updateListview()
+{
+   final Future<Database> dbFuture= databaseHelper.initializedDatabase();
+   dbFuture.then((database){
+
+    Future< List<Note>> noteListFuture=databaseHelper.getNoteList();
+     noteListFuture.then((notelist){
+        setState(() {
+          this.notelist=notelist;
+          this.count=notelist.length;
+        });
+     });
+   });
 }
 }
