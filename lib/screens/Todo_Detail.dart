@@ -5,7 +5,7 @@ import 'package:leo_todo_app/screens/Todo_list.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class TodoDetail extends StatefulWidget {
- String appBartitle;
+ final String appBartitle;
       TodoDetail(this.appBartitle);
    @override
   _TodoDetailState createState() => _TodoDetailState(appBartitle);
@@ -53,6 +53,7 @@ TextEditingController discriptionController=TextEditingController();
                 onChanged:(valuechange)
                 {
                   setState(() {
+                    
                     print("done");
                   });
 
