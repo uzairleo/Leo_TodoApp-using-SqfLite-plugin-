@@ -60,7 +60,7 @@ Map<String,dynamic> toMap()
   if(_id!=null){
    dataToMap['id']=_id;
   }
-   dataToMap['title']=_titlel;
+   dataToMap['title']=_title;
    dataToMap['discription']=_discription;
    dataToMap['date']=_date;
    dataToMap['priorities']=_priorities;
