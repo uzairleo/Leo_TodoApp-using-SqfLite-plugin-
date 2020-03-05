@@ -75,6 +75,7 @@ TextEditingController discriptionController=TextEditingController();
                style: textStyle,
                controller: titleController,
                onChanged: (value){
+                //  if(titleController.text.toString()==null)
                  updateTitle();
                },
                 decoration: InputDecoration(
@@ -118,7 +119,13 @@ TextEditingController discriptionController=TextEditingController();
           
                 onPressed: (){
                     setState(() {
-                        _save();
+                      if(titleController.text.toString()!=""&& discriptionController.text!="")
+                      {
+                         _save();
+                      }else{
+                        _showAlertDilogue("status", "Plz write something to move ahead");
+                      }
+
                     });
                 },
                 shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
@@ -280,6 +287,7 @@ if(result!=0)
   _showAlertDilogue("status","Error Occured while deleting note");
 }
 }
+
 //convert integer priority to string priority 
   //  sum()
   // {
