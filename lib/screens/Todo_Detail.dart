@@ -147,7 +147,7 @@ TextEditingController discriptionController=TextEditingController();
       context: context,
       title: "Quit",
       desc: "Make sure you save you todo otherwise it will not save automatically",
-      type: AlertType.info,
+      type: AlertType.warning,
       buttons: [
         DialogButton(
           child: Text("Exit",

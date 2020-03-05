@@ -24,6 +24,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   rflutter_alert: any
+  path_provider: any 
+  sqflite: any
+  intl: any 
   
 
 dev_dependencies:
