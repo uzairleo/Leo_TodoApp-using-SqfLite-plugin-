@@ -20,7 +20,7 @@ class Note{
   // set id(int newid){   //as we dont need to set id bcoz thats automatically
                           //done in the database 
   // }
- set setTitle(String newTitle)
+ set setTitle(String newTitle) 
  {
    if(newTitle.length<=255){
    this._title=newTitle;
@@ -51,17 +51,34 @@ class Note{
  }
  }
 
- //now a funtion which convert simple data to map objects
+ //now a funtion which convert Note object to map objects
  //(FOR WRITING/SAVING DATA FROM DATABASE)
 
+Map<String,dynamic> toMap()
+{
+  var dataToMap=Map<String,dynamic> ();
+  if(_id!=null){
+   dataToMap['id']=_id;
+  }
+   dataToMap['title']=_titlel;
+   dataToMap['discription']=_discription;
+   dataToMap['date']=_date;
+   dataToMap['priorities']=_priorities;
+return dataToMap;
+}
 
-
-
-
- //And now a function that extract simple data from map Object reverse of the above one
-//OR convert map objects to simple data
+ //And now a function that extract Note object from map Object reverse of the above one
+//OR convert map objects to simple data or note object
 //(FOR READING/RETRIEVING DATA FROM DATABASE)
 
+Note.fromMapObject(Map<String,dynamic> mapTodata)
+{
+  this._id=mapTodata['id'];
+  this._title=mapTodata['title'];
+  this._discription=mapTodata['discription'];
+  this._date=mapTodata['date'];
+  this._priorities=mapTodata['priorities'];
+}
 
 
 }
