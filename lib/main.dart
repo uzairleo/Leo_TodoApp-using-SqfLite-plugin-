@@ -13,7 +13,7 @@ class MyTodoApp extends StatelessWidget {
     return MaterialApp(
       title: 'Leo_Todo_App',
       home: Scaffold(
-        body:SplashScreen(),
+        body:SplashScreen()
       ),
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
