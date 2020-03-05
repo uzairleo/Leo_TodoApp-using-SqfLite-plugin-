@@ -1,4 +1,4 @@
-
+//creating table of database
 
 class Note{
 

@@ -64,6 +64,7 @@ class _TodolistState extends State<Todolist> {
               elevation:  4.0,
                child: InkWell(
                  onTap: (){
+                   print(index);
                   navigateToNextScreen(this.notelist[index],appBar: "Edit Note");
                     },
                                 child: ListTile(
@@ -118,11 +119,11 @@ class _TodolistState extends State<Todolist> {
   }
   delete(BuildContext context,Note note)async
   {
-      int result= await DatabaseHelper().deleteNote(note.getId);
+      int result= await DatabaseHelper().deleteNote(note.getId);//delete from database
       if(result!=0)
       {
         showSnackbar(context,"Note no $result deleted successfully");
-        updateListview();
+        updateListview();//it will remove the listile from the screen as well
       }
   }
   showSnackbar(BuildContext context,String title)
@@ -147,7 +148,7 @@ async{
                 
 }
 
-updateListview()
+updateListview()//it will update ui/screen after each operation
 {
    final Future<Database> dbFuture= databaseHelper.initializedDatabase();
    dbFuture.then((database){

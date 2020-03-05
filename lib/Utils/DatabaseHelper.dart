@@ -36,6 +36,7 @@ factory DatabaseHelper()
 //A function that will help us to execute the statement to create our database
  void _createDB(Database db,int newVersion)//here sql offered us this Database class
 async{
+                    //its a query used for creating table in any sql based database    
   await db.execute('CREATE TABLE $tabName($colId INTEGER PRIMARY KEY AUTOINCREMENT, '
   '$colTitle TEXT,$colDiscription TEXT,$colPriorities INTEGER,$colDate TEXT  )');
 
@@ -53,7 +54,7 @@ async
 return noteDatabase;
 }
 
-//now its time to create a getter for our _database reference variable
+//now its time to create a getter for our _database reference variable or singleton object
 Future<Database> get database async {
 //as the object is SINGLETONS SO here we check for null if its mean _database object null then initialized then move ahead
 if(_database==null)
@@ -68,7 +69,7 @@ if(_database==null)
 
 
 //1=>Retrieving/Reading Operation: Get all Note Objects from database
-Future<List<Map<String,dynamic>>> getNoteMapList()async
+Future<List<Map<String,dynamic>>> getMapList()async
 {
   Database db= await this.database;
   // String sqlrawaQuery='SELECT * FROM $tabName order by $colPriorities ASC';
@@ -113,8 +114,8 @@ Future<int> getCount()async
 }
 
 Future<List<Note>> getNoteList()async
-{
-  var noteMaplist=await getNoteMapList();
+{//now converting list<map> to List<Note> 
+  var noteMaplist=await getMapList();
   int count=noteMaplist.length;
 
   List<Note> noteList=List<Note>();

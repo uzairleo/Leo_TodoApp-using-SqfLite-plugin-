@@ -164,8 +164,10 @@ TextEditingController discriptionController=TextEditingController();
         );
 
   }
-  moveToList()
+  moveToList()async
   {
+    // int countdb=await helper.getCount();
+    // print('total count of objects we pushed to database == $countdb');
 Navigator.pop(context,true);
     //  Alert(
     //   context: context,
