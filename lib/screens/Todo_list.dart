@@ -155,9 +155,10 @@ updateListview()
     Future< List<Note>> noteListFuture=databaseHelper.getNoteList();
      noteListFuture.then((notelist){
         setState(() {
+      print (this.count);
           this.notelist=notelist;
-          this.count=notelist.length;
-        });
+          this.count=notelist.length;//here is the brain of ListItems count
+        });//here the count will increase each time this updateListview method called
      });
    });
 }
