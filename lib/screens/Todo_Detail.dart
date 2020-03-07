@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:leo_todo_app/Models/Note.dart';
 import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
 // import 'package:leo_todo_app/screens/Todo_list.dart';
-// import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class TodoDetail extends StatefulWidget {
   final Note note;
@@ -123,7 +123,11 @@ TextEditingController discriptionController=TextEditingController();
                       {
                          _save();
                       }else{
-                        _showAlertDilogue("status", "Plz write something to move ahead");
+                        _showFancyDilogue(
+                          title:"status", 
+                          msg:"Please fill the title and discription first",
+                          buttonText: 'OK',
+                          alertType: AlertType.info);
                       }
 
                     });
@@ -251,22 +255,54 @@ void _save()async
 
   if(result!=null)
   {//success
-    _showAlertDilogue('status','Your Note saved successfully');
+    _showFancyDilogue(
+    title:'Status',
+    msg:'Your Note was saved successfully',
+    buttonText: 'OK',
+    alertType: AlertType.info
+                      );
   }else
   {//failiure
-   _showAlertDilogue('status','problem while saving note');
+   _showFancyDilogue(
+     title:'Error',
+     msg:'problem while saving your Note',
+     buttonText:'Ok',
+     alertType: AlertType.error );
   }
 
 }
 
-_showAlertDilogue(String status,String msg)
+// _showAlertDilogue(String status,String msg)
+// {
+//   var alertDilogue=AlertDialog(
+// title: Text(status),
+// content: Text(msg),
+//   );
+//   showDialog(context: context,
+//   builder: (context)=>alertDilogue);
+// }
+_showFancyDilogue({String title,String msg,String buttonText,AlertType alertType})
 {
-  var alertDilogue=AlertDialog(
-title: Text(status),
-content: Text(msg),
-  );
-  showDialog(context: context,
-  builder: (context)=>alertDilogue);
+  setState(() {
+    
+  
+  Alert(context: context, 
+  title:title,
+  desc: msg,
+  type: alertType,
+   
+  buttons: [
+    DialogButton(
+      child: Text(buttonText),
+     onPressed: (){
+       Navigator.of(context).pop();
+     }),
+  
+  ],
+   
+  ).show();
+
+});
 }
 
 //A function which delete note from database 
@@ -276,7 +312,11 @@ void _delete()async
 // case 1: If user is trying to delete the New Note(i:e after coming to the detail page using FAB button)
 if(note.getId==null)
 {
-  _showAlertDilogue("status", "No note was deleted");
+  _showFancyDilogue(
+    title:"status", 
+    msg:"No note was deleted",
+    buttonText: 'OK',
+    alertType: AlertType.error);
 return ;
 }
 
@@ -284,9 +324,17 @@ return ;
 int result=await helper.deleteNote(note.getId);
 if(result!=0)
 {
-  _showAlertDilogue("status","your Note was Deleted Successfully");
+  _showFancyDilogue(
+    title:"Status",
+    msg:"your Note was Deleted Successfully",
+    buttonText: 'OK',
+    alertType: AlertType.success);
 }else{
-  _showAlertDilogue("status","Error Occured while deleting note");
+  _showFancyDilogue(
+    title:"status",
+    msg:"Error Occured while deleting note",
+    buttonText: 'OK',
+    alertType: AlertType.error);
 }
 }
 
