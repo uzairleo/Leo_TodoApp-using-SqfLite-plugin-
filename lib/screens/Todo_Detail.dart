@@ -297,9 +297,7 @@ _showFancyDilogue({String title,String msg,String buttonText,AlertType alertType
      onPressed: (){
        Navigator.of(context).pop();
      }),
-  
   ],
-   
   ).show();
 
 });
