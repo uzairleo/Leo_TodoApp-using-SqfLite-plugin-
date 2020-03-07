@@ -127,7 +127,8 @@ TextEditingController discriptionController=TextEditingController();
                           title:"status", 
                           msg:"Please fill the title and discription first",
                           buttonText: 'OK',
-                          alertType: AlertType.info);
+                          alertType: AlertType.info,
+                          bFunction: (){Navigator.pop(context);});
                       }
 
                     });
@@ -168,37 +169,11 @@ TextEditingController discriptionController=TextEditingController();
         );
 
   }
-  moveToList()async
+  moveToList()
   {
     // int countdb=await helper.getCount();
     // print('total count of objects we pushed to database == $countdb');
 Navigator.pop(context,true);
-    //  Alert(
-    //   context: context,
-    //   title: "Quit",
-    //   desc: "Make sure you save you todo otherwise it will not save automatically",
-    //   type: AlertType.warning,
-    //   buttons: [
-    //     DialogButton(
-    //       child: Text("Exit",
-    //       style: TextStyle(fontSize: 22,color:Colors.white),),
-    //       onPressed: (){
-
-    //         Navigator.push(context, MaterialPageRoute(
-    //           builder: (BuildContext context)
-    //           {
-                
-    //             return Todolist();
-
-    //           })
-    //           );
-    //      },
-    //       width: 120,),
-    //       ],
-    //    closeFunction: (){
-    //      Navigator.of(context).pop();
-    //    } 
-    //   ).show();
   }
 //convert string priority to integer priority 
 void updatePriorityAsInteger(String priority)
@@ -259,7 +234,8 @@ void _save()async
     title:'Status',
     msg:'Your Note was saved successfully',
     buttonText: 'OK',
-    alertType: AlertType.info
+    alertType: AlertType.info,
+    bFunction: (){Navigator.pop(context);}
                       );
   }else
   {//failiure
@@ -267,7 +243,8 @@ void _save()async
      title:'Error',
      msg:'problem while saving your Note',
      buttonText:'Ok',
-     alertType: AlertType.error );
+     alertType: AlertType.error ,
+     bFunction: (){Navigator.pop(context);});
   }
 
 }
@@ -281,32 +258,36 @@ void _save()async
 //   showDialog(context: context,
 //   builder: (context)=>alertDilogue);
 // }
-_showFancyDilogue({String title,String msg,String buttonText,AlertType alertType})
+_showFancyDilogue({String title,String msg,String buttonText,AlertType alertType,Function bFunction})
+// async
 {
-  setState(() {
-    
-  
+//  await Future.delayed(Duration(seconds:2,),(){});
+   
   Alert(context: context, 
   title:title,
   desc: msg,
+
   type: alertType,
    
   buttons: [
     DialogButton(
       child: Text(buttonText),
-     onPressed: (){
-       Navigator.of(context).pop();
-     }),
+     onPressed: bFunction
+    //  (){
+    //   //  moveToList();
+    //   Navigator.pop(context);
+    //  }
+     ),
   ],
   ).show();
 
-});
+
 }
 
 //A function which delete note from database 
 void _delete()async
 {
-  moveToList();
+
 // case 1: If user is trying to delete the New Note(i:e after coming to the detail page using FAB button)
 if(note.getId==null)
 {
@@ -314,7 +295,8 @@ if(note.getId==null)
     title:"status", 
     msg:"No note was deleted",
     buttonText: 'OK',
-    alertType: AlertType.error);
+    alertType: AlertType.error,
+    bFunction: (){Navigator.pop(context);},);
 return ;
 }
 
@@ -326,13 +308,15 @@ if(result!=0)
     title:"Status",
     msg:"your Note was Deleted Successfully",
     buttonText: 'OK',
-    alertType: AlertType.success);
+    alertType: AlertType.success,
+    bFunction: null);
 }else{
   _showFancyDilogue(
     title:"status",
     msg:"Error Occured while deleting note",
     buttonText: 'OK',
-    alertType: AlertType.error);
+    alertType: AlertType.error,
+    bFunction: null);
 }
 }
 
