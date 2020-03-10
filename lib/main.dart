@@ -62,6 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
             backgroundColor: Colors.pink,
           radius: 55,
           child: Icon(Icons.note_add,size: 50,color: Colors.grey,),
+          
           ),
         ),
         ),
