@@ -6,7 +6,6 @@ import 'package:leo_todo_app/Models/Note.dart';
 
 class DatabaseHelper
   {
-
   static DatabaseHelper _databaseHelper;//singletons instance of DatabaseHelper()
    //bcoz this will initialized only once through out the whole program execution.
 
@@ -39,7 +38,6 @@ async{
                     //its a query used for creating table in any sql based database    
   await db.execute('CREATE TABLE $tabName($colId INTEGER PRIMARY KEY AUTOINCREMENT, '
   '$colTitle TEXT,$colDiscription TEXT,$colPriorities INTEGER,$colDate TEXT  )');
-
 }
 
 //now its time to initialize database
