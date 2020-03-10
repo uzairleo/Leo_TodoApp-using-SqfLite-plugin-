@@ -102,7 +102,6 @@ class _TodolistState extends State<Todolist> {
     }
 
   }
-
   Color getPriorityColor(int priorityColor)
   {
       switch(priorityColor)
