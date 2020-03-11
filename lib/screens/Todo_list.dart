@@ -80,8 +80,21 @@ class _TodolistState extends State<Todolist> {
                       left: 18.0,
                       right: 18.0,
                      child: Container(
-                       color: Colors.white,
                        width: 380,
+                       decoration: BoxDecoration(
+                         color: Colors.white,
+                        boxShadow: [
+                      BoxShadow(
+                       color: Colors.black12,
+                       blurRadius: 25.0, // soften the shadow
+                       spreadRadius: 5.0, //extend the shadow
+                       offset: Offset(
+                         15.0, // Move to right 10  horizontally
+                         15.0, // Move to bottom 10 Vertically
+                        ),
+                        )
+                        ],
+                       ),
                        height: MediaQuery.of(context).size.height/1.5,
                         child:  todoBody(),
                      ),)  

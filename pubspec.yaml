@@ -27,6 +27,7 @@ dependencies:
   path_provider: any 
   sqflite: any
   intl: any 
+  flutter_spinkit: any 
   
 
 dev_dependencies:
