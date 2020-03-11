@@ -48,7 +48,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Container(
     alignment: Alignment.center,
-    color: Colors.deepPurple,
+    decoration: BoxDecoration(
+       color: Color(0xff5a348b),
+      gradient: LinearGradient(
+        colors: [Color(0xff8d70fe),Color(0xff2da9ef)],
+        begin:Alignment.centerRight,
+        end:Alignment(-1.0,-1.0),
+      )
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: MainAxisAlignment.center,
@@ -57,12 +64,12 @@ class _SplashScreenState extends State<SplashScreen> {
         Padding(padding: const EdgeInsets.only(top: 150),
         child: CircleAvatar(
           radius: 60,
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.amber,
           child: CircleAvatar(
-            backgroundColor: Colors.pink,
-          radius: 55,
-          child: Icon(Icons.note_add,size: 50,color: Colors.grey,),
-          
+            backgroundColor: Colors.pinkAccent,
+          radius: 53,
+          child: Icon(Icons.note_add,size: 55,color: Colors.grey,),
+
           ),
         ),
         ),
@@ -71,14 +78,14 @@ class _SplashScreenState extends State<SplashScreen> {
         style: TextStyle(
           fontSize: 40,
           fontWeight:FontWeight.bold,
-          color: Colors.grey,
+          color: Colors.white70,
         ),)),
         Padding(padding: const EdgeInsets.only(top: 100,bottom: 10),
         child: CircularProgressIndicator(backgroundColor: Colors.white60,),),
-        Padding(padding: const EdgeInsets.only(top: 80.0),
+        Padding(padding: const EdgeInsets.only(top: 85.0),
         child:Text("Version 1.0",style: TextStyle(
           fontSize: 12.0,
-          color:Colors.white54,
+          color:Colors.white60,
         ),)
         )
 
