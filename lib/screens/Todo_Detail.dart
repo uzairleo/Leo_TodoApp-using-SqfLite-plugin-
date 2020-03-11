@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:leo_todo_app/Models/Note.dart';
 import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
+import 'package:leo_todo_app/screens/Todo_list.dart';
 // import 'package:leo_todo_app/screens/Todo_list.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -216,7 +217,7 @@ note.setDiscription=discriptionController.text;
 //save your note to database
 void _save()async
 {
-  moveToList();
+  // moveToList();
   note.setDate=DateFormat.yMMMd().format(DateTime.now());
   var result;
   if(note.getId!=null)
@@ -235,7 +236,13 @@ void _save()async
     msg:'Your Note was saved successfully',
     buttonText: 'OK',
     alertType: AlertType.info,
-    bFunction: (){Navigator.pop(context);}
+    bFunction: (){
+      Navigator.push(context,
+      MaterialPageRoute(
+        builder: (_)=> Todolist()
+      ));
+  // Navigator.of(context).pop();
+    }
                       );
   }else
   {//failiure
@@ -309,14 +316,18 @@ if(result!=0)
     msg:"your Note was Deleted Successfully",
     buttonText: 'OK',
     alertType: AlertType.success,
-    bFunction: null);
+    bFunction: (){
+      Navigator.of(context).pop();
+    });
 }else{
   _showFancyDilogue(
     title:"status",
     msg:"Error Occured while deleting note",
     buttonText: 'OK',
     alertType: AlertType.error,
-    bFunction: null);
+    bFunction: (){
+      Navigator.of(context).pop();
+    });
 }
 }
 

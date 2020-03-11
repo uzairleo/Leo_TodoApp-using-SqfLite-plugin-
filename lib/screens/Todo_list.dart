@@ -102,6 +102,7 @@ class _TodolistState extends State<Todolist> {
     }
 
   }
+
   Color getPriorityColor(int priorityColor)
   {
       switch(priorityColor)
@@ -121,7 +122,7 @@ class _TodolistState extends State<Todolist> {
       int result= await DatabaseHelper().deleteNote(note.getId);//delete from database
       if(result!=0)
       {
-        showSnackbar(context,"Note no $result deleted successfully");
+        showSnackbar(context,"Your Note is deleted successfully");
         updateListview();//it will remove the listile from the screen as well
       }
   }
