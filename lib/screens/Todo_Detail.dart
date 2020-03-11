@@ -318,7 +318,7 @@ if(result!=0)
     alertType: AlertType.success,
     bFunction: (){
 
-      Navigator.of(context).pop();
+            Navigator.of(context).pop();
     
     });
 }else{

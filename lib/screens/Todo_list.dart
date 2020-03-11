@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:leo_todo_app/screens/Todo_Detail.dart';
 import 'dart:async';
 import 'package:leo_todo_app/Models/Note.dart';
@@ -14,6 +15,9 @@ class _TodolistState extends State<Todolist> {
   int count=0;//count for list size 
 
   DatabaseHelper databaseHelper=DatabaseHelper();
+  String day=DateFormat.d().format(DateTime.now());
+  String month=DateFormat.MMMM().format(DateTime.now());
+  String year=DateFormat.y().format(DateTime.now());
   List<Note> notelist;
   @override
   Widget build(BuildContext context)
@@ -24,35 +28,78 @@ class _TodolistState extends State<Todolist> {
       updateListview();
     }
     return Scaffold(
-      appBar: AppBar(
-        title:Text("Leo_Todo_App"),
-        centerTitle: true,
-          ),
-           drawer: Drawer(
-             child: Column(
-                children: <Widget>[
-                  Container(
-                    height:300,
-                    color:Colors.deepPurple,
-                    child:Center(
-                      child: Icon(Icons.tag_faces,size: 200,color:Colors.white60),
-                    ),
-                  )
-                ],
-             )
-             ,
-             elevation: 3.0,
+      
+              bottomNavigationBar: BottomAppBar(
+                color:Colors.blue,
+                shape:CircularNotchedRectangle(),
+                child:Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    IconButton(
+                      icon:Icon(Icons.note),
+                      color: Colors.white, 
+                      onPressed: (){}),
+                    
+                    IconButton(
+                      icon:Icon(Icons.search),
+                      color: Colors.white, 
+                      onPressed: (){}),
+                    
+                  ],)
               ),
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
               floatingActionButton: FloatingActionButton(
                 tooltip: "add new note",
                 child: Icon(Icons.add),
+                backgroundColor:  Color(0xff8d70fe),
                 onPressed: ()
                 {
                   navigateToNextScreen(Note('','',2),appBar: "Add Note");
                 },
               ),
-              body:todoBody(),
+              body:Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Stack(
+                    children: <Widget>[
+                      Positioned(child: Container(
+                        width:MediaQuery.of(context).size.width,
+                        height:MediaQuery.of(context).size.height/3,
+                        decoration:BoxDecoration(
+                          color: Color(0xff5a348b),
+                          gradient: LinearGradient(
+                            colors: [Color(0xff8d70fe),Color(0xff2da9ef)],
+                            begin:Alignment.centerRight,
+                            end: Alignment(-1.0,-1.0),
+                            )
+                        ),
+                        child:_dateContent(),
+                      )),
+                    Positioned(
+                      top: 160,
+                      left: 18.0,
+                      right: 18.0,
+                     child: Container(
+                       color: Colors.white,
+                       width: 380,
+                       height: MediaQuery.of(context).size.height/1.5,
+                        child:  todoBody(),
+                     ),)  
+                    
+                    ],
+                ),
+              ),
               );
+  }
+  Widget _dateContent()
+  {
+    return Align(
+                child: ListTile(
+                leading:Text(day,style:TextStyle(fontSize: 50.0,color:Colors.amber)),
+                title: Text(month,style:TextStyle(fontSize: 34.0,color:Colors.white)),
+                 subtitle: Text(year,style:TextStyle(fontSize: 24.0,color:Colors.white)),
+                          ),
+                        ); 
   }
   ListView todoBody()
   {
@@ -60,28 +107,31 @@ class _TodolistState extends State<Todolist> {
       itemCount: count,
       itemBuilder: (context,index)
       {
-        return  Card(
-              elevation:  4.0,
-               child: InkWell(
-                 onTap: (){
-                   print(index);
-                  navigateToNextScreen(this.notelist[index],appBar: "Edit Note");
-                    },
-                                child: ListTile(
-                   leading:CircleAvatar(
-                     child:getPriorityIcon(this.notelist[index].getPriorities),
-                     backgroundColor: getPriorityColor(this.notelist[index].getPriorities),
-                   ),
-                   title:Text( this.notelist[index].getTitle),
-                   subtitle: Text( this.notelist[index].getDate),
-                   trailing: IconButton(
-                     icon: Icon(Icons.delete), 
-                     onPressed: (){
-                    //deleteButtonLogic Here
-                    delete(context, notelist[index]);
-                     })
+        return  Padding(
+          padding: const EdgeInsets.only(left: 20.0,right:20.0,bottom: 10.0),
+          child: Card(
+                elevation:  4.0,
+                 child: InkWell(
+                   onTap: (){
+                     print(index);
+                    navigateToNextScreen(this.notelist[index],appBar: "Edit Note");
+                      },
+                                  child: ListTile(
+                     leading:CircleAvatar(
+                       child:getPriorityIcon(this.notelist[index].getPriorities),
+                       backgroundColor: getPriorityColor(this.notelist[index].getPriorities),
                      ),
-               ),
+                     title:Text( this.notelist[index].getTitle),
+                     subtitle: Text( this.notelist[index].getDate),
+                     trailing: IconButton(
+                       icon: Icon(Icons.delete), 
+                       onPressed: (){
+                      //deleteButtonLogic Here
+                      delete(context, notelist[index]);
+                       })
+                       ),
+                 ),
+          ),
         );
       }
     );
