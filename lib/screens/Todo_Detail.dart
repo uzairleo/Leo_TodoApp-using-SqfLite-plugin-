@@ -317,7 +317,9 @@ if(result!=0)
     buttonText: 'OK',
     alertType: AlertType.success,
     bFunction: (){
+
       Navigator.of(context).pop();
+    
     });
 }else{
   _showFancyDilogue(
@@ -330,7 +332,6 @@ if(result!=0)
     });
 }
 }
-
 //convert integer priority to string priority 
   //  sum()
   // {

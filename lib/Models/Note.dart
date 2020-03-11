@@ -72,7 +72,7 @@ return dataToMap;
  //And now a function that extract Note object from map Object reverse of the above one
 //OR convert map objects to simple data or note object
 //(FOR READING/RETRIEVING DATA FROM DATABASE)
-
+//this is named constructor
 Note.fromMapObject(Map<String,dynamic> mapTodata)
 {
   this._id=mapTodata['id'];

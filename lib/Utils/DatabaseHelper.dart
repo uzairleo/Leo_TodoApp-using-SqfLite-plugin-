@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
+import 'package:path_provider/path_provider.dart';//IT GIVE US FILE DIRECTORY AND OTHER HELP IN FILE MANAGEMENT SYSTEM
+import 'dart:io';//it give us DIRECTORY CLASS
 import 'package:leo_todo_app/Models/Note.dart';
 
 class DatabaseHelper
