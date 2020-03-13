@@ -36,7 +36,7 @@ class _TodolistState extends State<Todolist> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     IconButton(
-                      icon:Icon(Icons.note),
+                      icon:Icon(Icons.verified_user),
                       color: Colors.white, 
                       onPressed: (){}),
                     

@@ -28,6 +28,7 @@ dependencies:
   sqflite: any
   intl: any 
   flutter_spinkit: any 
+  font_awesome_flutter: any
   
 
 dev_dependencies:
