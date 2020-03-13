@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:leo_todo_app/screens/Todo_Detail.dart';
 import 'dart:async';
 import 'package:leo_todo_app/Models/Note.dart';
 import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
+import 'package:leo_todo_app/screens/UserLogin.dart';
+import 'package:leo_todo_app/screens/userSetting.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Todolist extends StatefulWidget {
@@ -36,14 +39,18 @@ class _TodolistState extends State<Todolist> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     IconButton(
-                      icon:Icon(Icons.verified_user),
+                      icon:Icon(FontAwesomeIcons.user),
                       color: Colors.white, 
-                      onPressed: (){}),
+                      onPressed: (){
+                       navigateToUser(nameOfPage: "userlogin");
+                      }),
                     
                     IconButton(
                       icon:Icon(Icons.search),
                       color: Colors.white, 
-                      onPressed: (){}),
+                      onPressed: (){
+                        navigateToUser(nameOfPage: "usersetting");
+                      }),
                     
                   ],)
               ),
@@ -226,5 +233,30 @@ updateListview()//it will update ui/screen after each operation
      });
    });
    }
+
+   navigateToUser({nameOfPage})
+  {
+    if(nameOfPage=="userLogin"||nameOfPage=="userlogin")
+    {
+
+      Navigator.push(context, 
+      MaterialPageRoute(
+        builder:(context)=> (UserLogin())
+      ));
+    }else 
+    if(nameOfPage=="UserSetting"||nameOfPage=="usersetting")
+    {
+
+      Navigator.push(context, 
+      MaterialPageRoute(
+        builder:(context)=> (UserSetting())
+      ));
+
+    }else
+    {
+      print("Plz write the route name perfectly");
+    }
+
+  }
 
 }
