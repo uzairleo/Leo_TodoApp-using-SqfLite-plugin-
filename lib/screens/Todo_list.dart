@@ -129,28 +129,32 @@ class _TodolistState extends State<Todolist> {
       {
         return  Padding(
           padding: const EdgeInsets.only(left: 20.0,right:20.0,bottom: 10.0),
-          child: Card(
-                elevation:  4.0,
-                 child: InkWell(
-                   onTap: (){
-                     print(index);
-                    navigateToNextScreen(this.notelist[index],appBar: "Edit Note");
-                      },
-                                  child: ListTile(
-                     leading:CircleAvatar(
-                       child:getPriorityIcon(this.notelist[index].getPriorities),
-                       backgroundColor: getPriorityColor(this.notelist[index].getPriorities),
-                     ),
-                     title:Text( this.notelist[index].getTitle),
-                     subtitle: Text( this.notelist[index].getDate),
-                     trailing: IconButton(
-                       icon: Icon(Icons.delete), 
-                       onPressed: (){
-                      //deleteButtonLogic Here
-                      delete(context, notelist[index]);
-                       })
+          child: Dismissible(
+                    key: Key(notelist[index].toString()),
+                    background: myHiddenContainer(),
+                      child: Card(
+                  elevation:  4.0,
+                   child: InkWell(
+                     onTap: (){
+                       print(index);
+                      navigateToNextScreen(this.notelist[index],appBar: "Edit Note");
+                        },
+                                    child: ListTile(
+                       leading:CircleAvatar(
+                         child:getPriorityIcon(this.notelist[index].getPriorities),
+                         backgroundColor: getPriorityColor(this.notelist[index].getPriorities),
                        ),
-                 ),
+                       title:Text( this.notelist[index].getTitle),
+                       subtitle: Text( this.notelist[index].getDate),
+                       trailing: IconButton(
+                         icon: Icon(Icons.delete), 
+                         onPressed: (){
+                        //deleteButtonLogic Here
+                        delete(context, notelist[index]);
+                         })
+                         ),
+                   ),
+            ),
           ),
         );
       }
@@ -258,5 +262,34 @@ updateListview()//it will update ui/screen after each operation
     }
 
   }
+Widget myHiddenContainer()
+{
+return Container(
+  height: MediaQuery.of(context).size.height,
+  color: Colors.orange,
+  child: Row(
+    children: <Widget>[
+      Align(
+        alignment: Alignment.centerLeft,
+        child:IconButton(
+          icon: Icon(FontAwesomeIcons.solidTrashAlt),
+           onPressed: (){
+
+           })
+      ),
+       Align(
+        alignment: Alignment.centerRight,
+        child:IconButton(
+          icon: Icon(FontAwesomeIcons.archive),
+           onPressed: (){
+             
+           })
+      )
+
+    ],
+  ),
+);
+
+}
 
 }
