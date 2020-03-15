@@ -1,5 +1,6 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 
 class TdoDetailDilogue extends StatefulWidget {
@@ -60,17 +61,58 @@ class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
                    ],))
                     ],
                   ),
+                  //basic date field
                   Padding(padding: const EdgeInsets.only(top:10.0,left:0.0),
-                  child:Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  child:DateTimeField(
+                    decoration: InputDecoration(
+                      hintText: "Date & time",
+                      hintStyle: _myCustomStyle,
+                    ),
+                    format: DateFormat("yyyy-MM-dd HH:mm"), 
                     
-                    children:<Widget>[
-                      Text("Time",style:_myCustomStyle),
+                    onShowPicker: (context, currentValue) async {
+          final date = await showDatePicker(
+              context: context,
+              firstDate: DateTime(1900),
+              initialDate: currentValue ?? DateTime.now(),
+              lastDate: DateTime(2100));
+          if (date != null) {
+            final time = await showTimePicker(
+              context: context,
+              initialTime:
+                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+            );
+            return DateTimeField.combine(date, time);
+          } else {
+            return currentValue;
+          }
+        }
+                    //only time picker 
+                  //   onShowPicker: (context,currentValue)async
+                  //   {
+                  //     var time=await showTimePicker(
+                  //       context:context,
+                  //  initialTime:TimeOfDay.fromDateTime(currentValue??DateTime.now()));
+                  //   return DateTimeField.convert(time);
+                  //     // showDatePicker(
+                  //     //   context: context, 
+                  //     //   initialDate: DateTime.now(), 
+                  //     //   firstDate: DateTime(1999),
+                  //     //    lastDate: currentValue?? DateTime(2100)
+                  //     //    );
+                  //   }
+                    )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                    
+                  //   children:<Widget>[
+                  //     Text("Time",style:_myCustomStyle),
 
                       
                       
-                    ]
-                  )),
+                  //   ]
+                  // )
+                  ),
                     Padding(padding: const EdgeInsets.only(top:10.0,left:0.0),
                   child:TextField(
                     controller: titleController,
@@ -123,11 +165,7 @@ colorContainer(_width,_height,_color)
  selectTime()
 
 {
-  setState(() {
-    showTimePicker(
-    context: context, 
-    initialTime : TimeOfDay.now());
-  });
+  
    
 
 }

@@ -29,6 +29,8 @@ dependencies:
   intl: any 
   flutter_spinkit: any 
   font_awesome_flutter: any
+  datetime_picker_formfield: any
+  flutter_datetime_picker : any 
   
 
 dev_dependencies:
