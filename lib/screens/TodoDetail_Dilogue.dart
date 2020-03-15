@@ -63,6 +63,7 @@ class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
                   ),
                   //basic date field
                   Padding(padding: const EdgeInsets.only(top:10.0,left:0.0),
+                
                   child:DateTimeField(
                     decoration: InputDecoration(
                       hintText: "Date & time",
@@ -74,7 +75,7 @@ class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
           final date = await showDatePicker(
               context: context,
               firstDate: DateTime(1900),
-              initialDate: currentValue ?? DateTime.now(),
+              initialDate: currentValue ?? DateTime.now(),//checking for null pointer
               lastDate: DateTime(2100));
           if (date != null) {
             final time = await showTimePicker(
@@ -137,7 +138,16 @@ class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
                     ),
                   ),),
                   
-                 
+                 Padding(padding: const EdgeInsets.only(top:29.0,left: 159.0),
+                 child: RaisedButton(
+                   onPressed: (){},
+                   child: Text("Save",style: Theme.of(context).primaryTextTheme.button,),
+                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(19.0))),
+                   color: Color(0xff8d70fe),
+                   colorBrightness: Brightness.dark,
+                   ),
+                   ),
+        
                 ],
               ),
             ],
@@ -161,12 +171,5 @@ colorContainer(_width,_height,_color)
       ),
     ),
   );
-}
- selectTime()
-
-{
-  
-   
-
 }
 }
