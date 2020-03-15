@@ -131,7 +131,18 @@ class _TodolistState extends State<Todolist> {
           padding: const EdgeInsets.only(left: 20.0,right:20.0,bottom: 10.0),
           child: Dismissible(
                     key: Key(notelist[index].toString()),
-                    background: myHiddenContainer(),
+background: myHiddenContainer(getPriorityColor(this.notelist[index].getPriorities)),
+                  onDismissed: (directions){
+                      if(directions==DismissDirection.startToEnd)
+                      {
+                            // delete(context, notelist[index]);
+                      }else
+                      if(directions==DismissDirection.endToStart)
+                      {
+
+                            delete(context, notelist[index]);
+                      }
+                  },
                       child: Card(
                   elevation:  4.0,
                    child: InkWell(
@@ -150,7 +161,7 @@ class _TodolistState extends State<Todolist> {
                          icon: Icon(Icons.delete), 
                          onPressed: (){
                         //deleteButtonLogic Here
-                        delete(context, notelist[index]);
+                        // delete(context, notelist[index]);
                          })
                          ),
                    ),
@@ -262,17 +273,18 @@ updateListview()//it will update ui/screen after each operation
     }
 
   }
-Widget myHiddenContainer()
+Widget myHiddenContainer(Color noteColor)
 {
 return Container(
   height: MediaQuery.of(context).size.height,
-  color: Colors.orange,
+  color: noteColor,
   child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[
       Align(
         alignment: Alignment.centerLeft,
         child:IconButton(
-          icon: Icon(FontAwesomeIcons.solidTrashAlt),
+          icon: Icon(FontAwesomeIcons.archive),
            onPressed: (){
 
            })
@@ -280,9 +292,9 @@ return Container(
        Align(
         alignment: Alignment.centerRight,
         child:IconButton(
-          icon: Icon(FontAwesomeIcons.archive),
+          icon: Icon(FontAwesomeIcons.solidTrashAlt),
            onPressed: (){
-             
+
            })
       )
 
