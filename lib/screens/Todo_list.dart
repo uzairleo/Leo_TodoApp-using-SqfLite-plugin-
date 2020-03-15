@@ -279,16 +279,16 @@ return Container(
   height: MediaQuery.of(context).size.height,
   color: noteColor,
   child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    mainAxisAlignment: MainAxisAlignment.end,
     children: <Widget>[
-      Align(
-        alignment: Alignment.centerLeft,
-        child:IconButton(
-          icon: Icon(FontAwesomeIcons.archive),
-           onPressed: (){
+      // Align(
+      //   alignment: Alignment.centerLeft,
+      //   child:IconButton(
+      //     icon:null,
+      //      onPressed: (){
 
-           })
-      ),
+      //      })
+      // ),
        Align(
         alignment: Alignment.centerRight,
         child:IconButton(
