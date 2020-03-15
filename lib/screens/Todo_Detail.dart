@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:leo_todo_app/Models/Note.dart';
 import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
+import 'package:leo_todo_app/screens/TodoDetail_Dilogue.dart';
 import 'package:leo_todo_app/screens/Todo_list.dart';
 // import 'package:leo_todo_app/screens/Todo_list.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -109,7 +110,6 @@ TextEditingController discriptionController=TextEditingController();
             
            ),
        ) ,
-       
           //fourth element row of Buttons
       Padding(
           
