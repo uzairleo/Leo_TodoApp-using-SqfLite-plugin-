@@ -1,21 +1,39 @@
+import 'dart:html';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:leo_todo_app/Models/Note.dart';
+import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
+import 'package:leo_todo_app/screens/Todo_list.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 
-class TdoDetailDilogue extends StatefulWidget {
+class Todo_DetailTwo extends StatefulWidget {
+ final Note note;
+ final String appBartitle;
+Todo_DetailTwo(this.note,this.appBartitle);
   @override
-  _TdoDetailDilogueState createState() => _TdoDetailDilogueState();
+  _Todo_DetailTwoState createState() => _Todo_DetailTwoState(note,appBartitle);
 }
 
-class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
-  var priorities=["High","Low"];
+class _Todo_DetailTwoState extends State<Todo_DetailTwo> {
+  DatabaseHelper helper=DatabaseHelper();
+   String appBartitle;
+   Note note;
+  _Todo_DetailTwoState(this.note,this.appBartitle);
+   
+  static var _priorities=["High","Low"];
   var _myCustomStyle=TextStyle(color:Colors.black54);
   var titleController=TextEditingController();
   var discriptionController=TextEditingController();
   
+   
   @override
   Widget build(BuildContext context) {
+     titleController.text=note.getTitle;
+    discriptionController.text=note.getDiscription;
+   
     return myCustomDilogue();
 
   }
@@ -37,17 +55,18 @@ class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
                     children: <Widget>[
                       Padding(padding: const EdgeInsets.only(top:8.0,left:4.0),
                  child:DropdownButton(
-                   items: priorities.map((dropdownitem){
+                   items: _priorities.map((dropdownitem){
                      return DropdownMenuItem(
                        value: dropdownitem,
                        child: Text(dropdownitem));
                    }).toList(), 
-                   onChanged: (changedValue){
+
+                   onChanged: (valuechange){
                      setState(() {
-                       
+                       updatePriorityAsInteger(valuechange);
                      });
                    },
-                   value: "Low",
+                   value: getPriorityAsString(note.getPriorities),
                    )),
                    Padding(padding: const EdgeInsets.only(top:8.0,left:40.0),
                    child:Text("OR"),),
@@ -117,6 +136,10 @@ class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
                     Padding(padding: const EdgeInsets.only(top:10.0,left:0.0),
                   child:TextField(
                     controller: titleController,
+                    onChanged: (value)
+                    {
+                      updateTitle();
+                    },
                     keyboardType: TextInputType.text,
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
@@ -130,6 +153,9 @@ class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
                     controller: discriptionController,
                     keyboardType: TextInputType.text,
                     textAlign: TextAlign.left,
+                    onChanged: (value){
+                      updateDiscription();
+                    },
                     // enabled: false,
                     decoration: InputDecoration(
                       hintText: "Discription",
@@ -140,7 +166,12 @@ class _TdoDetailDilogueState extends State<TdoDetailDilogue> {
                   
                  Padding(padding: const EdgeInsets.only(top:29.0,left: 159.0),
                  child: RaisedButton(
-                   onPressed: (){},
+                   onPressed: (){
+                     setState(() {
+                       
+                       _save();
+                     });
+                   },
                    child: Text("Save",style: Theme.of(context).primaryTextTheme.button,),
                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(19.0))),
                    color: Color(0xff8d70fe),
@@ -172,4 +203,187 @@ colorContainer(_width,_height,_color)
     ),
   );
 }
+
+
+
+
+moveToList()
+  {
+    // int countdb=await helper.getCount();
+    // print('total count of objects we pushed to database == $countdb');
+Navigator.pop(context,true);
+  }
+//convert string priority to integer priority 
+void updatePriorityAsInteger(String priority)
+{
+  switch(priority)
+  {
+    case'High':
+    note.setPriorities=1;
+    break;
+    case 'Low':
+    note.setPriorities=2;
+    break;
+  }
+}
+String getPriorityAsString(int value)
+{
+  String priority;
+  switch(value)
+  {
+    case 1:
+    priority=_priorities[0];//High
+    break;
+    case 2:
+    priority=_priorities[1];//Low
+
+  }
+  return priority;
+}
+
+updateTitle()
+{
+note.setTitle=titleController.text;
+}
+
+updateDiscription()
+{
+note.setDiscription=discriptionController.text;
+}
+
+//save your note to database
+void _save()async
+{
+  // moveToList();
+  note.setDate=DateFormat.yMMMd().format(DateTime.now());
+  var result;
+  if(note.getId!=null)
+  {//case 1: update operation
+      result= await helper.updateNote(note);
+
+  }else{
+    //case 2: Insert operation
+      result= await helper.insertNote(note);
+  }
+
+  if(result!=null)
+  {//success
+    _showFancyDilogue(
+    title:'Status',
+    msg:'Your Note was saved successfully',
+    buttonText: 'OK',
+    alertType: AlertType.info,
+    bFunction: (){
+      Navigator.push(context,
+      MaterialPageRoute(
+        builder: (_)=> Todolist()
+      ));
+  // Navigator.of(context).pop();
+    }
+                      );
+  }else
+  {//failiure
+   _showFancyDilogue(
+     title:'Error',
+     msg:'problem while saving your Note',
+     buttonText:'Ok',
+     alertType: AlertType.error ,
+     bFunction: (){Navigator.pop(context);});
+  }
+
+}
+
+// _showAlertDilogue(String status,String msg)
+// {
+//   var alertDilogue=AlertDialog(
+// title: Text(status),
+// content: Text(msg),
+//   );
+//   showDialog(context: context,
+//   builder: (context)=>alertDilogue);
+// }
+_showFancyDilogue({String title,String msg,String buttonText,AlertType alertType,Function bFunction})
+// async
+{
+//  await Future.delayed(Duration(seconds:2,),(){});
+   
+  // Alert(context: context, 
+  // title:title,
+  // desc: msg,
+
+  // type: alertType,
+   
+  // buttons: [
+  //   DialogButton(
+  //     child: Text(buttonText),
+  //    onPressed: bFunction
+  //   //  (){
+  //   //   //  moveToList();
+  //   //   Navigator.pop(context);
+  //   //  }
+  //    ),
+  // ],
+  // ).show();
+showDialog(context: context,
+builder:(context)
+{
+  return AlertDialog(
+    title: Text(title),
+    content: Text(msg),
+    actions: <Widget>[
+      RaisedButton(
+        onPressed: (){
+          Navigator.pop(context);
+        },
+        child: Text(buttonText),)
+    ],
+    
+
+
+  ) ;
+});
+}
+
+//A function which delete note from database 
+void _delete()async
+{
+
+// case 1: If user is trying to delete the New Note(i:e after coming to the detail page using FAB button)
+if(note.getId==null)
+{
+  _showFancyDilogue(
+    title:"status", 
+    msg:"No note was deleted",
+    buttonText: 'OK',
+    alertType: AlertType.error,
+    bFunction: (){Navigator.pop(context);},);
+return ;
+}
+
+//case 2: if user wanna to delete the old note(i:e by pressing on ListTile in the list)
+int result=await helper.deleteNote(note.getId);
+if(result!=0)
+{
+  _showFancyDilogue(
+    title:"Status",
+    msg:"your Note was Deleted Successfully",
+    buttonText: 'OK',
+    alertType: AlertType.success,
+    bFunction: (){
+
+            Navigator.of(context).pop();
+    
+    });
+}else{
+  _showFancyDilogue(
+    title:"status",
+    msg:"Error Occured while deleting note",
+    buttonText: 'OK',
+    alertType: AlertType.error,
+    bFunction: (){
+      Navigator.of(context).pop();
+    });
+}
+}
+
 }

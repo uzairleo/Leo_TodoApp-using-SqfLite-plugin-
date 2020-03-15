@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:leo_todo_app/screens/TodoDetail_Dilogue.dart';
 import 'package:leo_todo_app/screens/Todo_Detail.dart';
 import 'dart:async';
 import 'package:leo_todo_app/Models/Note.dart';
 import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
+import 'package:leo_todo_app/screens/Todo_DetailTwo.dart';
 import 'package:leo_todo_app/screens/UserLogin.dart';
 import 'package:leo_todo_app/screens/userSetting.dart';
 import 'package:sqflite/sqflite.dart';
@@ -65,7 +65,7 @@ class _TodolistState extends State<Todolist> {
                    showDialog(context: context,
           builder: (BuildContext context)
           {
-            return TdoDetailDilogue();
+            return Todo_DetailTwo( Note('','',2),"");
           });
                   // navigateToNextScreen(Note('','',2),appBar: "Add Note");
                 },
