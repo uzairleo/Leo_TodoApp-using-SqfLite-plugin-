@@ -8,6 +8,7 @@ import 'package:leo_todo_app/Utils/DatabaseHelper.dart';
 import 'package:leo_todo_app/screens/Todo_DetailTwo.dart';
 import 'package:leo_todo_app/screens/UserLogin.dart';
 import 'package:leo_todo_app/screens/userSetting.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Todolist extends StatefulWidget {
@@ -22,6 +23,7 @@ class _TodolistState extends State<Todolist> {
   String day=DateFormat.d().format(DateTime.now());
   String month=DateFormat.MMMM().format(DateTime.now());
   String year=DateFormat.y().format(DateTime.now());
+  Note note;
   List<Note> notelist;
   @override
   Widget build(BuildContext context)
@@ -147,6 +149,7 @@ background: myHiddenContainer(getPriorityColor(this.notelist[index].getPrioritie
                       {
 
                             delete(context, notelist[index]);
+                            deleting();
                       }
                   },
                       child: Card(
@@ -309,5 +312,83 @@ return Container(
 );
 
 }
+//A function which delete note from database 
+ void deleting()async
+{
 
+// case 1: If user is trying to delete the New Note(i:e after coming to the detail page using FAB button)
+if(note.getId==null)
+{
+  _showFancyDilogue(
+    title:"status", 
+    msg:"No note was deleted",
+    buttonText: 'OK',
+    alertType: AlertType.error,
+    bFunction: (){Navigator.pop(context);},);
+return ;
+}
+
+//case 2: if user wanna to delete the old note(i:e by pressing on ListTile in the list)
+int result=await databaseHelper.deleteNote(note.getId);
+if(result!=0)
+{
+  _showFancyDilogue(
+    title:"Status",
+    msg:"your Note was Deleted Successfully",
+    buttonText: 'OK',
+    alertType: AlertType.success,
+    bFunction: (){
+
+            Navigator.of(context).pop();
+    
+    });
+}else{
+  _showFancyDilogue(
+    title:"status",
+    msg:"Error Occured while deleting note",
+    buttonText: 'OK',
+    alertType: AlertType.error,
+    bFunction: (){
+      Navigator.of(context).pop();
+    });
+}
+}
+_showFancyDilogue({String title,String msg,String buttonText,AlertType alertType,Function bFunction})
+async
+{
+ await Future.delayed(Duration(seconds:2,),(){});
+   
+  Alert(context: context, 
+  
+  title:title,
+  desc: msg,
+
+  type: alertType,
+   
+  buttons: [
+    DialogButton(
+      child: Text(buttonText),
+     onPressed: bFunction
+     ),
+  ],
+  ).show();
+// showDialog(context: context,
+// builder:(context)
+// {
+//   return AlertDialog(
+//     title: Text(title),
+//     content: Text(msg),
+//     actions: <Widget>[
+//       RaisedButton(
+//         onPressed: (){
+//           Navigator.pop(context);
+//         },
+//         child: Text(buttonText),)
+//     ],
+    
+
+
+  // ) ;
+// });
+}
 }

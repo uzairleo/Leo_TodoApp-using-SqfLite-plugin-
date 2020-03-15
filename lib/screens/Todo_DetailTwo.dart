@@ -1,4 +1,4 @@
-import 'dart:html';
+
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
@@ -303,49 +303,45 @@ void _save()async
 //   builder: (context)=>alertDilogue);
 // }
 _showFancyDilogue({String title,String msg,String buttonText,AlertType alertType,Function bFunction})
-// async
+async
 {
-//  await Future.delayed(Duration(seconds:2,),(){});
+ await Future.delayed(Duration(seconds:2,),(){});
    
-  // Alert(context: context, 
-  // title:title,
-  // desc: msg,
+  Alert(context: context, 
+  title:title,
+  desc: msg,
 
-  // type: alertType,
+  type: alertType,
    
-  // buttons: [
-  //   DialogButton(
-  //     child: Text(buttonText),
-  //    onPressed: bFunction
-  //   //  (){
-  //   //   //  moveToList();
-  //   //   Navigator.pop(context);
-  //   //  }
-  //    ),
-  // ],
-  // ).show();
-showDialog(context: context,
-builder:(context)
-{
-  return AlertDialog(
-    title: Text(title),
-    content: Text(msg),
-    actions: <Widget>[
-      RaisedButton(
-        onPressed: (){
-          Navigator.pop(context);
-        },
-        child: Text(buttonText),)
-    ],
+  buttons: [
+    DialogButton(
+      child: Text(buttonText),
+     onPressed: bFunction
+     ),
+  ],
+  ).show();
+// showDialog(context: context,
+// builder:(context)
+// {
+//   return AlertDialog(
+//     title: Text(title),
+//     content: Text(msg),
+//     actions: <Widget>[
+//       RaisedButton(
+//         onPressed: (){
+//           Navigator.pop(context);
+//         },
+//         child: Text(buttonText),)
+//     ],
     
 
 
-  ) ;
-});
+  // ) ;
+// });
 }
 
 //A function which delete note from database 
-void _delete()async
+ void delete()async
 {
 
 // case 1: If user is trying to delete the New Note(i:e after coming to the detail page using FAB button)
