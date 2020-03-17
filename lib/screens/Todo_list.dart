@@ -149,6 +149,7 @@ background: myHiddenContainer(getPriorityColor(this.notelist[index].getPrioritie
                       {
 
                             delete(context, notelist[index]);
+                            updateListview();
                             // deleting();
                       }
                   },
