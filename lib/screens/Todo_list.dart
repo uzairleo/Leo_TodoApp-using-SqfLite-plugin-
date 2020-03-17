@@ -143,7 +143,7 @@ background: myHiddenContainer(getPriorityColor(this.notelist[index].getPrioritie
                   onDismissed: (directions){
                       if(directions==DismissDirection.startToEnd)
                       {
-                            // delete(context, notelist[index]);
+                            delete(context, notelist[index]);
                       }else
                       if(directions==DismissDirection.endToStart)
                       {
