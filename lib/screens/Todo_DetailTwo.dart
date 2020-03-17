@@ -274,10 +274,16 @@ void _save()async
     buttonText: 'OK',
     alertType: AlertType.info,
     bFunction: (){
-      Navigator.push(context,
-      MaterialPageRoute(
-        builder: (_)=> Todolist()
-      ));
+      // Navigator.push(context,
+      // MaterialPageRoute(
+      //   builder: (_)=> Todolist()
+      // ));
+      showDialog(context: context,
+      builder:(BuildContext context)
+      {
+        return Todolist();
+      }
+      );
   // Navigator.of(context).pop();
     }
                       );
@@ -382,7 +388,7 @@ if(result!=0)
 }
 }
 
- Widget _myTitleContainer()
+ Widget _myTitleContainer(Color taskColor,String taskName,String subTask )
 {
   return Container(
     height: 90.0,

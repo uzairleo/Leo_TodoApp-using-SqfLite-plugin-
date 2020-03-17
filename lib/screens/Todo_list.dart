@@ -149,7 +149,7 @@ background: myHiddenContainer(getPriorityColor(this.notelist[index].getPrioritie
                       {
 
                             delete(context, notelist[index]);
-                            deleting();
+                            // deleting();
                       }
                   },
                       child: Card(
@@ -228,13 +228,10 @@ background: myHiddenContainer(getPriorityColor(this.notelist[index].getPrioritie
 
 navigateToNextScreen(Note note,{String appBar})
 async{
-   bool result=await  Navigator.push(context,
-                   MaterialPageRoute(
-                     builder:(BuildContext context )
-                     {
-                       return TodoDetail(note,appBar);
-                     }
-                   ));
+   bool result=await  showDialog(context: context,
+   builder:(BuildContext context,){
+     return Todo_DetailTwo(note,appBar);
+   });
     if(result==true)
     {
       updateListview();
