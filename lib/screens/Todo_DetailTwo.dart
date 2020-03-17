@@ -382,4 +382,57 @@ if(result!=0)
 }
 }
 
+ Widget _myTitleContainer()
+{
+  return Container(
+    height: 90.0,
+    child: Material(
+      elevation:14.0,
+      color: Colors.white,
+      shadowColor: Colors.grey,
+      child: Container(
+        child: Row(
+          children:<Widget>
+          [
+            Container(
+              width:10.0,
+              height:80.0 ,
+              color: Colors.deepOrange,
+            ),
+            Expanded(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Dummy title",
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      ),),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("subTitle dummy",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  )
+                ],
+              )
+            )),
+            Expanded(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text("00:24")),
+            ))
+          ]
+        ),
+      ),
+    ),
+  );
+}
+
 }
